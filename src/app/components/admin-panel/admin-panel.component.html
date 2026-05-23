@@ -1,0 +1,23 @@
+<div *ngFor="let p of players | keyvalue">
+  <h3>{{ p.value.playerId }}</h3>
+
+<p>Browser: {{ p.value.deviceInfo?.browser?.name }}</p>
+
+  <p>OS: {{ p.value.deviceInfo?.os?.name }}</p>
+
+  <p>Device: {{ p.value.deviceInfo?.device?.type }}</p>
+
+  <p>CPU: {{ p.value.deviceInfo?.cpu?.architecture }}</p>
+
+  <p>Language: {{ p.value.deviceInfo?.language }}</p>
+
+  <p>Platform: {{ p.value.deviceInfo?.platform }}</p>
+
+  <p>Screen: {{ p.value.deviceInfo?.screen?.width }}x{{ p.value.deviceInfo?.screen?.height }}</p>
+
+  <p>Viewport: {{ p.value.deviceInfo?.viewport?.width }}x{{ p.value.deviceInfo?.viewport?.height }}</p>
+
+  <p>Timezone: {{ p.value.deviceInfo?.timezone }}</p>
+
+  <p>Last seen: {{ p.value.lastSeen }}</p>
+</div>

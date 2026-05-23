@@ -1,0 +1,153 @@
+<div class="lobby-container">
+
+  <!-- 🎮 TITLE -->
+  <h1 class="title">🎮 Game Lobby</h1>
+
+  <!-- 👑 HOST -->
+  <div *ngIf="lobbyHost" class="host-box">
+    👑 <strong>{{ getHostName() }}</strong> is the host
+  </div>
+
+  <div class="lobby-grid">
+
+    <!-- 👥 PLAYERS -->
+    <div class="card players-card">
+
+      <h3>👥 Players</h3>
+
+      <div *ngFor="let player of lobbyPlayers" class="player-row">
+
+        <div class="player-info">
+          <span class="player-dot"></span>
+          {{ player.name }}
+        </div>
+
+        <span *ngIf="player.id === lobbyHost">👑</span>
+      </div>
+
+      <div *ngIf="lobbyPlayers.length === 0" class="empty">
+        Waiting for players...
+      </div>
+
+      <!-- ▶️ START -->
+      <div class="start-container">
+        <button 
+          class="start-btn"
+          *ngIf="isHost"
+          [disabled]="lobbyPlayers.length < 2"
+          (click)="startGameLobby()"
+        >
+          ▶ Start Game
+        </button>
+
+        <div *ngIf="!isHost" class="waiting">
+          Waiting for host...
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 🔥 MATCHES -->
+    <div class="card matches-card">
+
+      <h3>🔥 Live Matches</h3>
+
+      <div *ngIf="matches.length === 0" class="empty">
+        No active matches
+      </div>
+
+      <div *ngFor="let match of matches" class="match-card">
+
+        <div class="match-row">
+
+          <!-- PLAYER 1 -->
+          <div class="player">
+            <div class="name">{{ match.players[0]?.name }}</div>
+            <div>🎯 {{ match.players[0]?.score }}</div>
+            <div>⏱️ {{ (match.players[0]?.timeLeft / 1000) | number:'1.0-0' }}s</div>
+          </div>
+
+          <div class="vs">VS</div>
+
+          <!-- PLAYER 2 -->
+          <div class="player">
+            <div class="name">{{ match.players[1]?.name }}</div>
+            <div>🎯 {{ match.players[1]?.score }}</div>
+            <div>⏱️ {{ (match.players[1]?.timeLeft / 1000) | number:'1.0-0' }}s</div>
+          </div>
+
+        </div>
+
+        <!-- STATUS -->
+        <div *ngIf="match.gameOver" class="winner">
+          🏆 {{ match.winner || 'Draw' }}
+        </div>
+
+        <div *ngIf="!match.gameOver" class="live">
+          <span class="live-dot"></span> LIVE
+        </div>
+
+      </div>
+
+    </div>
+
+    <!--Form-->
+<div class="form-container" *ngIf="showForm">
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-card">
+
+    <h2>👤 Player Profile</h2>
+
+    <div class="grid">
+
+      <div class="field full">
+        <label>Name</label>
+        <input formControlName="name" placeholder="Enter your name" />
+      </div>
+
+      <div class="field full">
+        <label>Birthdate</label>
+        <input type="date" formControlName="birthdate" />
+      </div>
+
+    </div>
+
+    <hr />
+
+    <h3>🎮 Preferences</h3>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Favorite Team</label>
+        <input formControlName="favoriteTeam" placeholder="e.g. Lakers, Barcelona" />
+      </div>
+
+      <div class="field">
+        <label>Favorite Artist</label>
+        <input formControlName="favoriteArtist" placeholder="e.g. Drake, Taylor Swift" />
+      </div>
+
+      <div class="field">
+        <label>Favorite Sport</label>
+        <input formControlName="favoriteSport" placeholder="e.g. Football, Basketball" />
+      </div>
+
+      <div class="field">
+        <label>Hobby</label>
+        <input formControlName="hobby" placeholder="e.g. Gaming, Chess" />
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <button type="submit">🚀 Enter Game</button>
+    </div>
+
+  </form>
+
+</div>
+
+  </div>
+
+</div>

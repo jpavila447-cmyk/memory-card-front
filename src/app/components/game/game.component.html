@@ -1,0 +1,78 @@
+<div *ngIf="gameState as gs" class="game-container">
+
+  <!-- 🏆 GAME OVER OVERLAY -->
+  <div *ngIf="gs.gameOver" class="overlay">
+    <div class="modal">
+      <h2>🏁 Game Over</h2>
+
+      <h3 *ngIf="gs.winner; else tie">
+        Winner: {{ getWinnerName() }}
+      </h3>
+
+      <ng-template #tie>
+        <h3>It's a draw!</h3>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- 🧑‍🤝‍🧑 TOP BAR -->
+  <div class="top-bar">
+
+    <!-- Player 1 -->
+    <div class="player-box"
+         *ngIf="gs.players[0]"
+         [class.active]="gs.turnIndex === 0">
+
+      <div class="name">{{ gs.players[0].name }}</div>
+      <div class="info">🎯 {{ gs.players[0].score }}</div>
+      <div class="info">⏱️ {{ (gs.players[0].timeLeft / 1000) | number:'1.0-0' }}s</div>
+    </div>
+
+    <!-- TURN -->
+    <div class="turn-box">
+      Turn: <strong>{{ gs.players[gs.turnIndex]?.name }}</strong>
+    </div>
+
+    <!-- Player 2 -->
+    <div class="player-box"
+         *ngIf="gs.players[1]"
+         [class.active]="gs.turnIndex === 1">
+
+      <div class="name">{{ gs.players[1].name }}</div>
+      <div class="info">🎯 {{ gs.players[1].score }}</div>
+      <div class="info">⏱️ {{ (gs.players[1].timeLeft / 1000) | number:'1.0-0' }}s</div>
+    </div>
+
+  </div>
+
+  <!-- 🎮 TITLE -->
+  <div class="header">
+    <h2>🧠 Memory Game</h2>
+  </div>
+
+  <!-- 🃏 BOARD -->
+  <div class="board">
+
+    <div
+      class="card"
+      *ngFor="let card of gs.gameState.cards; let i = index"
+      [class.flipped]="isFlipped(i)"
+      [class.disabled]="!canPlay()"
+      (click)="canPlay() && flip(i)"
+    >
+      <div class="card-inner">
+
+        <div class="card-front">?</div>
+
+        <div class="card-back">
+          <span *ngIf="isFlipped(i)">
+            {{ card.text }}
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
