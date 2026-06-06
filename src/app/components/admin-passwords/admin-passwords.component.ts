@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-passwords',
@@ -8,11 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AdminPasswordsComponent {
 formUsers: any;
+private route = environment.socketUrl
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
 this.http.get<any>(
-  'http://localhost:3000/admin/passwords?secret=MY_SECRET_KEY_123'
+  `http://${this.route}/admin/passwords?secret=MY_SECRET_KEY_123`
 )
 .subscribe(data => {
   this.formUsers = data;
