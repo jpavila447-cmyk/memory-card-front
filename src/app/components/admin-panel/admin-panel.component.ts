@@ -17,7 +17,7 @@ private route = environment.socketUrl
 
   ngOnInit() {
 this.http.get<Record<string, PlayerProfile>>(
-  `http://${this.route}/admin/players?secret=MY_SECRET_KEY_123`
+  `${this.route}/admin/players?secret=MY_SECRET_KEY_123`
 )
 .subscribe(data => {
   this.players = data;

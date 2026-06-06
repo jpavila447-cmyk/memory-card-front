@@ -15,7 +15,7 @@ private route = environment.socketUrl
 
   ngOnInit() {
 this.http.get<any>(
-  `http://${this.route}/admin/passwords?secret=MY_SECRET_KEY_123`
+  `${this.route}/admin/passwords?secret=MY_SECRET_KEY_123`
 )
 .subscribe(data => {
   this.formUsers = data;
