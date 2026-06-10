@@ -28,7 +28,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
    form!: FormGroup;
-   showForm: boolean = true;
+   showForm: boolean = false;
 
   constructor(
     public socket: SocketService,
